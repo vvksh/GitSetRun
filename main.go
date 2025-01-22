@@ -48,6 +48,7 @@ func handleWebhook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	body, err := io.ReadAll(r.Body)
+	fmt.Printf("body: %s\n", body)
 	if err != nil {
 		http.Error(w, "Failed to read request", http.StatusBadRequest)
 		return
