@@ -24,8 +24,9 @@ curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/ru
 echo "ba46ba7ce3a4d7236b16fbe44419fb453bc08f866b24f04d549ec89f1722a29e  actions-runner-linux-x64-2.321.0.tar.gz" | shasum -a 256 -c
 tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 export RUNNER_ALLOW_RUNASROOT="1"
-./config.sh --url https://github.com/vvksh/GitSetRun --token $GH_RUNNER_TOKEN
-./run.sh
+./config.sh --url https://github.com/vvksh/GitSetRun --token $GH_RUNNER_TOKEN --labels gitsetrun --unattended --ephemeral
+./run.sh & wait
+sudo shutdown -h now
 EOF
   )
 }
