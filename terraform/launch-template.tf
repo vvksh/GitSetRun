@@ -10,6 +10,13 @@ resource "aws_launch_template" "gitsetrun_lt" {
 
   user_data = base64encode(<<EOF
 #!/bin/bash
+apt update -y
+apt install -y docker.io
+systemctl enable docker
+systemctl start docker
+
+# Add the runner user to the docker group
+usermod -aG docker ubuntu
 
 GITHUB_PAT="${var.github_pat}"
 REPO_OWNER="${var.github_repo_owner}"
