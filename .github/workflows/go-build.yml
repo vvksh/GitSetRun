@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: gitsetrun
+    container:
+      image: golang:1.20 # Runs inside this Docker image
 
     steps:
       # Checkout the code

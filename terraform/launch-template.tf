@@ -10,9 +10,12 @@ resource "aws_launch_template" "gitsetrun_lt" {
 
   user_data = base64encode(<<EOF
 #!/bin/bash
+
 GITHUB_PAT="${var.github_pat}"
 REPO_OWNER="${var.github_repo_owner}"
 REPO_NAME="${var.github_repo_name}"
+
+RUNNER_NAME="gitsetrun-$(curl -s http://169.254.169.254/latest/meta-data/instance-id)"
 
 GH_RUNNER_TOKEN=$(curl -X POST -H "Authorization: token $GITHUB_PAT" \
     -H "Accept: application/vnd.github.v3+json" \
@@ -24,7 +27,7 @@ curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/ru
 echo "ba46ba7ce3a4d7236b16fbe44419fb453bc08f866b24f04d549ec89f1722a29e  actions-runner-linux-x64-2.321.0.tar.gz" | shasum -a 256 -c
 tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 export RUNNER_ALLOW_RUNASROOT="1"
-./config.sh --url https://github.com/vvksh/GitSetRun --token $GH_RUNNER_TOKEN --labels gitsetrun --unattended --ephemeral
+./config.sh --url https://github.com/vvksh/GitSetRun --token $GH_RUNNER_TOKEN --unattended --labels gitsetrun  --name $RUNNER_NAME  --ephemeral
 ./run.sh & wait
 sudo shutdown -h now
 EOF
