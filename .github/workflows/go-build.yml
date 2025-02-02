@@ -21,7 +21,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20'  # Set your desired Go version
+          go-version: "1.20" # Set your desired Go version
 
       # Install dependencies
       - name: Install dependencies
@@ -29,11 +29,4 @@ jobs:
 
       # Build the Go binary
       - name: Build
-        run: go build -o gitsetrun
-
-      # Save the built binary as an artifact
-      - name: Upload binary artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: go-binary
-          path: gitsetrun
+        run: go build -o gitsetrun *.go
