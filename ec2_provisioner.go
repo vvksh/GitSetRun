@@ -25,6 +25,9 @@ func provisionEC2(jobId int64, repoFullName string) (string, error) {
 			LaunchTemplateName: aws.String("gitsetrun-launch-template"),
 			Version:            aws.String("$Latest"),
 		},
+		InstanceMarketOptions: &ec2.InstanceMarketOptionsRequest{
+			MarketType: aws.String("spot"),
+		},
 		MinCount: aws.Int64(1),
 		MaxCount: aws.Int64(1),
 		TagSpecifications: []*ec2.TagSpecification{
