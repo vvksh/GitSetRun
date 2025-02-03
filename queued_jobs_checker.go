@@ -10,7 +10,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-func CheckQueuedJobs(ctx context.Context) {
+func CheckQueuedJobs(ctx context.Context, checkInterval time.Duration) {
 	token := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	)
@@ -52,7 +52,7 @@ func CheckQueuedJobs(ctx context.Context) {
 				log.Println("No queued jobs found.")
 			}
 
-			time.Sleep(10 * time.Second)
+			time.Sleep(checkInterval)
 		}
 	}
 }

@@ -28,7 +28,7 @@ func main() {
 		port = "3000" // Default port
 	}
 	ctx := context.Background()
-	go CheckQueuedJobs(ctx)
+	go CheckQueuedJobs(ctx, checkInterval)
 	// Start the HTTP server
 	http.HandleFunc("/webhook", handleWebhook)
 	log.Printf("Server is running on http://localhost:%s/webhook", port)
