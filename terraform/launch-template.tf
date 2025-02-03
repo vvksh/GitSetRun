@@ -1,7 +1,7 @@
 resource "aws_launch_template" "gitsetrun_lt" {
   name          = "gitsetrun-launch-template"
   image_id      = "ami-00c257e12d6828491"
-  instance_type = "t3.micro"
+  instance_type = "t3.small"
   iam_instance_profile {
     name = aws_iam_instance_profile.gitsetrun_profile.name
   }
