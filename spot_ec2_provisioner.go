@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/ec2"
 )
 
-func provisionEC2(jobId int64, repoFullName string) (string, error) {
+func provisionSpotEC2(repoFullName string, numInstances int) (string, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-west-2"),
 	})
@@ -28,16 +28,13 @@ func provisionEC2(jobId int64, repoFullName string) (string, error) {
 		InstanceMarketOptions: &ec2.InstanceMarketOptionsRequest{
 			MarketType: aws.String("spot"),
 		},
-		MinCount: aws.Int64(1),
-		MaxCount: aws.Int64(1),
+
+		MinCount: aws.Int64(int64(numInstances)),
+		MaxCount: aws.Int64(int64(numInstances)),
 		TagSpecifications: []*ec2.TagSpecification{
 			{
 				ResourceType: aws.String("instance"),
 				Tags: []*ec2.Tag{
-					{
-						Key:   aws.String("JobId"),
-						Value: aws.String(fmt.Sprintf("gitsetrun-%d", jobId)),
-					},
 					{
 						Key:   aws.String("Repository"),
 						Value: aws.String(repoFullName),

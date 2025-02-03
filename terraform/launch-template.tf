@@ -5,7 +5,8 @@ resource "aws_launch_template" "gitsetrun_lt" {
   iam_instance_profile {
     name = aws_iam_instance_profile.gitsetrun_profile.name
   }
-  vpc_security_group_ids = [aws_security_group.gitsetrun_sg.id]
+  instance_initiated_shutdown_behavior = "terminate"
+  vpc_security_group_ids               = [aws_security_group.gitsetrun_sg.id]
 
 
   user_data = base64encode(<<EOF

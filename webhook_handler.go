@@ -74,7 +74,7 @@ func handleWebhook(w http.ResponseWriter, r *http.Request) {
 
 	if payload.Action == "queued" && payload.WorkflowJob.Status == "queued" {
 		log.Printf("Queued job detected: Repo=%s, JobId=%d queued", repoFullName, jobID)
-		instanceID, err := provisionEC2(jobID, repoFullName)
+		instanceID, err := provisionSpotEC2(repoFullName, 1)
 		if err != nil {
 			log.Printf("Failed to provision EC2 instance: %v", err)
 			http.Error(w, "Failed to provision EC2 instance", http.StatusInternalServerError)
