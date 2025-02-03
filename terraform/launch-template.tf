@@ -23,7 +23,7 @@ GITHUB_PAT="${var.github_pat}"
 REPO_OWNER="${var.github_repo_owner}"
 REPO_NAME="${var.github_repo_name}"
 
-RUNNER_NAME="gitsetrun-$(curl -s http://169.254.169.254/latest/meta-data/instance-id)"
+RUNNER_NAME="gitsetrun-$(hostname)"
 
 GH_RUNNER_TOKEN=$(curl -X POST -H "Authorization: token $GITHUB_PAT" \
     -H "Accept: application/vnd.github.v3+json" \
